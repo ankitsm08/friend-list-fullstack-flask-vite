@@ -42,7 +42,7 @@ const EditModal: React.FC<{ user: User, setUsers : UsersSetter }> = ({ user, set
         isClosable: true,
         position: "top",
       });
-      
+
       setUsers((prevUsers) => prevUsers.map((u) => u.id !== user.id ? u : data));
       user = data;
       close();
@@ -89,14 +89,14 @@ const EditModal: React.FC<{ user: User, setUsers : UsersSetter }> = ({ user, set
                 <FormLabel>Full Name</FormLabel>
                 <Input
                   value={inputs.name}
-                  onChange={(e) => setInputs({ ...inputs, description: e.target.value })}
+                  onChange={(e) => setInputs({ ...inputs, name: e.target.value })}
                 />
               </FormControl>
               <FormControl>
                 <FormLabel>Role</FormLabel>
                 <Input
                   value={inputs.role}
-                  onChange={(e) => setInputs({ ...inputs, description: e.target.value })}
+                  onChange={(e) => setInputs({ ...inputs, role: e.target.value })}
                 />
               </FormControl>
             </Flex>
