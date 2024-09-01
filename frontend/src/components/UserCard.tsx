@@ -1,17 +1,47 @@
-import { Avatar, Box, Card, CardBody, CardHeader, Flex, Heading, IconButton, Text, useColorModeValue } from "@chakra-ui/react"
+import { Avatar, Box, Card, CardBody, CardHeader, Flex, Heading, IconButton, Text, useColorModeValue, useToast } from "@chakra-ui/react"
 import { BiTrash } from "react-icons/bi";
 import EditModal from "./EditModal";
+import { User, UsersSetter } from "../types/User";
+import { BASE_URL } from "../App";
 
-type UserCardProps = {
-  user: {
-    id: number;
-    name: string;
-    role: string;
-    description: string;
-  };
-};
 
-const UserCard = ({ user }: UserCardProps) => {
+const UserCard: React.FC<{ user: User, setUsers : UsersSetter }> = ({ user, setUsers }) => {
+
+  const toast = useToast();
+
+  const handleDeleteUser = async () => {
+    try {
+      const res = await fetch(BASE_URL + "/api/friends/" + user.id, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || data.error || "Something went wrong");
+      }
+
+      setUsers((prevUsers) => prevUsers.filter((u) => u.id !== user.id));
+
+      toast({
+        status: "success",
+        title: "Deleted",
+        description: "Friend deleted successfully.",
+        duration: 3000,
+        isClosable: true,
+        position: "top",
+      })
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "top",
+      })
+    }
+  }
+
   return (
     <Card
       bg={useColorModeValue("gray.200", "gray.700")}
@@ -23,7 +53,7 @@ const UserCard = ({ user }: UserCardProps) => {
             gap={4}
             alignItems={"center"}
           >
-            <Avatar src="https://avatar.iran.liara.run/public" />
+            <Avatar src={ user.imgUrl } />
 
             <Box>
               <Heading size={"sm"}>{ user.name }</Heading>
@@ -32,13 +62,14 @@ const UserCard = ({ user }: UserCardProps) => {
           </Flex>
 
           <Flex>
-            <EditModal user={user} />
+            <EditModal user={user} setUsers={setUsers} />
             <IconButton
               variant={"ghost"}
               colorScheme="red"
               size={"sm"}
               aria-label="See Menu"
               icon={<BiTrash size={20} />}
+              onClick={handleDeleteUser}
             />
           </Flex>
 
