@@ -21,7 +21,7 @@ const EditModal: React.FC<{ user: User, setUsers : UsersSetter }> = ({ user, set
     e.preventDefault(); // prevent page refresh
     setIsLoading(true);
     try {
-      const res = await fetch(BASE_URL + "/api/friends/" + user.id, {
+      const res = await fetch(BASE_URL + "/friends/" + user.id, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

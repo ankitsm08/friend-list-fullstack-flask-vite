@@ -11,7 +11,7 @@ const UserCard: React.FC<{ user: User, setUsers : UsersSetter }> = ({ user, setU
 
   const handleDeleteUser = async () => {
     try {
-      const res = await fetch(BASE_URL + "/api/friends/" + user.id, {
+      const res = await fetch(BASE_URL + "/friends/" + user.id, {
         method: "DELETE",
       });
       const data = await res.json();

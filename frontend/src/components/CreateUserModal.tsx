@@ -15,7 +15,7 @@ const CreateUserModal: React.FC<{ setUsers: UsersSetter }> = ({ setUsers }) => {
     e.preventDefault(); // prevent page refresh
     setIsLoading(true);
     try {
-      const res = await fetch(BASE_URL + "/api/friends", {
+      const res = await fetch(BASE_URL + "/friends", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

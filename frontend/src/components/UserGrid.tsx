@@ -10,7 +10,7 @@ const UserGrid: React.FC<{ users : User[], setUsers : UsersSetter }> = ({ users,
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch(BASE_URL + "/api/friends");
+      const res = await fetch(BASE_URL + "/friends");
       const data = await res.json();
 
       if (!res.ok) {
